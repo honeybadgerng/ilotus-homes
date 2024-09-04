@@ -69,10 +69,10 @@ export default function LandingPage() {
     setIsMenuVisible(false); // Close the menu
     switch (option) {
       case "Login/Register":
-        navigation.navigate("LoginRegister"); // Ensure this screen exists
+        // navigation.navigate("LoginRegister"); // Ensure this screen exists
         break;
       case "Settings":
-        navigation.navigate("Settings"); // Ensure this screen exists
+        // navigation.navigate("Settings"); // Ensure this screen exists
         break;
       case "About Us":
         navigation.navigate("AboutUs"); // Ensure this screen exists
