@@ -14,7 +14,7 @@ export default function AboutPage() {
       <ScrollView contentContainerStyle={styles.container}>
         {/* Logo at the top */}
         <Image
-          source={require("../../assets/logo.jpg")} // Replace with your logo path
+          source={require("../assets/logo.jpg")} // Replace with your logo path
           style={styles.logo}
         />
 
