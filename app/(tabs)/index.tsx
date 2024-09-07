@@ -15,6 +15,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { signOut } from "firebase/auth"; // Import signOut
+import { auth } from "../../firebase";
 
 const { width } = Dimensions.get("window");
 
@@ -33,7 +35,76 @@ const properties = [
     price: "₦40,000,000",
     location: "Ikota",
   },
-  // Add more properties as needed
+  {
+    id: "3",
+    title: "Property 3",
+    image: require("../../assets/property2.jpg"),
+    price: "₦20,000,000",
+    location: "Epe",
+  },
+  {
+    id: "4",
+    title: "Property 4",
+    image: require("../../assets/property1.jpg"),
+    price: "₦50,000,000",
+    location: "Mushin",
+  },
+  {
+    id: "5",
+    title: "Property 5",
+    image: require("../../assets/property2.jpg"),
+    price: "₦90,000,000",
+    location: "Kogi",
+  },
+  {
+    id: "6",
+    title: "Property 6",
+    image: require("../../assets/property1.jpg"),
+    price: "₦40,000,000",
+    location: "Ketu",
+  },
+  {
+    id: "7",
+    title: "Property 7",
+    image: require("../../assets/property2.jpg"),
+    price: "₦40,000,000",
+    location: "Sagamu",
+  },
+  {
+    id: "8",
+    title: "Property 8",
+    image: require("../../assets/property2.jpg"),
+    price: "₦40,000,000",
+    location: "Ibeju",
+  },
+  {
+    id: "9",
+    title: "Property 9",
+    image: require("../../assets/property1.jpg"),
+    price: "₦40,000,000",
+    location: "Meran",
+  },
+  {
+    id: "10",
+    title: "Property 10",
+    image: require("../../assets/property2.jpg"),
+    price: "₦40,000,000",
+    location: "Eleganza",
+  },
+  {
+    id: "11",
+    title: "Property 11",
+    image: require("../../assets/property1.jpg"),
+    price: "₦40,000,000",
+    location: "Ojota",
+  },
+  {
+    id: "12",
+    title: "Property 12",
+    image: require("../../assets/property1.jpg"),
+    price: "₦12,000,000",
+    location: "Ojota",
+  }, // Add more properties as needed
 ];
 
 export default function LandingPage() {
@@ -68,11 +139,15 @@ export default function LandingPage() {
   const handleMenuOption = (option) => {
     setIsMenuVisible(false); // Close the menu
     switch (option) {
-      case "Login/Register":
-        // navigation.navigate("LoginRegister"); // Ensure this screen exists
-        break;
-      case "Settings":
-        // navigation.navigate("Settings"); // Ensure this screen exists
+      case "Logout":
+        signOut(auth)
+          .then(() => {
+            console.log("User logged out");
+            navigation.navigate("LoginScreen"); // Ensure this screen exists
+          })
+          .catch((error) => {
+            console.error("Error logging out:", error);
+          });
         break;
       case "About Us":
         navigation.navigate("AboutUs"); // Ensure this screen exists
@@ -187,9 +262,9 @@ export default function LandingPage() {
           <Text style={styles.menuTitle}>Menu</Text>
           <TouchableOpacity
             style={styles.menuOption}
-            onPress={() => handleMenuOption("Login/Register")}
+            onPress={() => handleMenuOption("Logout")}
           >
-            <Text style={styles.menuOptionText}>Login/Register</Text>
+            <Text style={styles.menuOptionText}>Logout</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuOption}

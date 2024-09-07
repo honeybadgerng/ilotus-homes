@@ -3,15 +3,18 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "app/LoginScreen.js",
+    "app/RegisterScreen.js",
+    "app/(tabs)/_layout.js",
+    "app/(tabs)/index.js",
+    "app/_layout.js"
   ]
 }
