@@ -41,7 +41,7 @@ export default function RootLayout() {
           options={{ title: "Property Details" }}
         />
         <Stack.Screen
-          name="about"
+          name="AboutUs"
           options={{ title: "About i-Lotus Homes" }} // Set the title for the about page
         />
         <Stack.Screen name="+not-found" />
