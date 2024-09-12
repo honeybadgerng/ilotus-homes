@@ -1,97 +1,93 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
-  Text,
   Image,
+  Text,
   ScrollView,
-  TouchableOpacity,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
+  Button,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRoute } from "@react-navigation/native";
+import { properties } from "../../app/propertiesApi"; // Importing properties
 
 const { width } = Dimensions.get("window");
 
 export default function PropertyDetails() {
-  const { id } = useLocalSearchParams(); // Get the id from the route params
-  const router = useRouter();
+  const route = useRoute();
+  const { id } = route.params;
 
-  // Mock data fetching, replace with actual API call or data fetching logic
-  const property = {
-    title: "Property " + id,
-    images: [require("../../assets/property1.jpg")], // replace with actual images
-    price: "₦80,000,000",
-    location: "Lekki",
-    description: "This is a detailed description of the property.",
-  };
+  const [property, setProperty] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0); // Track the current image index
+  const scrollViewRef = useRef(null); // Reference for ScrollView
 
-  const scrollViewRef = React.useRef<ScrollView>(null);
-  const scrollX = React.useRef(0);
+  useEffect(() => {
+    const selectedProperty = properties.find((prop) => prop.id === id);
+    setProperty(selectedProperty);
+  }, [id]);
 
-  const handleNext = () => {
-    if (scrollViewRef.current) {
-      scrollX.current += width - 80;
-      scrollViewRef.current.scrollTo({ x: scrollX.current, animated: true });
+  if (!property) return <Text>Loading...</Text>;
+
+  const handleNextImage = () => {
+    if (currentIndex < property.images.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      scrollViewRef.current.scrollTo({
+        x: (currentIndex + 1) * width,
+        animated: true,
+      });
     }
   };
 
-  const handlePrev = () => {
-    if (scrollViewRef.current) {
-      scrollX.current -= width - 80;
-      if (scrollX.current < 0) scrollX.current = 0;
-      scrollViewRef.current.scrollTo({ x: scrollX.current, animated: true });
+  const handlePreviousImage = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      scrollViewRef.current.scrollTo({
+        x: (currentIndex - 1) * width,
+        animated: true,
+      });
     }
   };
 
   return (
-    <SafeAreaView
-      style={{ backgroundColor: "#F0F0F0", flex: 1, marginTop: 50 }}
-    >
-      <View style={styles.container}>
-        {/* Back Button */}
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={32} color="black" />
-        </TouchableOpacity>
+    <ScrollView style={styles.container}>
+      {/* Carousel for property images */}
+      <View style={styles.carouselContainer}>
+        <ScrollView
+          ref={scrollViewRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={false} // Disable manual swiping; only allow buttons to navigate
+          style={styles.carousel}
+        >
+          {property.images.map((image, index) => (
+            <Image key={index} source={image} style={styles.image} />
+          ))}
+        </ScrollView>
 
-        {/* Property Title */}
-        <Text style={styles.title}>{property.title}</Text>
-
-        {/* Carousel */}
-        <View style={styles.carouselContainer}>
-          {/* Previous Button */}
-          <TouchableOpacity style={styles.carouselButton} onPress={handlePrev}>
-            <Text>{"<"}</Text>
-          </TouchableOpacity>
-
-          {/* Image Carousel */}
-          <ScrollView
-            ref={scrollViewRef}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.carouselContentContainer}
-          >
-            {property.images.map((image, index) => (
-              <View key={index} style={styles.carouselItem}>
-                <Image source={image} style={styles.carouselImage} />
-              </View>
-            ))}
-          </ScrollView>
-
-          {/* Next Button */}
-          <TouchableOpacity style={styles.carouselButton} onPress={handleNext}>
-            <Text>{">"}</Text>
-          </TouchableOpacity>
+        {/* Navigation buttons for image carousel */}
+        <View style={styles.navigationButtons}>
+          <Button
+            title="Previous"
+            onPress={handlePreviousImage}
+            disabled={currentIndex === 0}
+          />
+          <Button
+            title="Next"
+            onPress={handleNextImage}
+            disabled={currentIndex === property.images.length - 1}
+          />
         </View>
+      </View>
 
-        {/* Property Details */}
+      {/* Property details */}
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>{property.title}</Text>
         <Text style={styles.price}>{property.price}</Text>
         <Text style={styles.location}>{property.location}</Text>
         <Text style={styles.description}>{property.description}</Text>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -99,47 +95,49 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#fff",
+  },
+  carouselContainer: {
+    height: 250,
+    marginBottom: 16,
+  },
+  carousel: {
+    flex: 1,
+  },
+  image: {
+    width: width - 32,
+    height: 250,
+    resizeMode: "cover",
+    borderRadius: 8,
+  },
+  navigationButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  detailsContainer: {
+    paddingVertical: 16,
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
-  },
-  carouselContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  carouselContentContainer: {
-    alignItems: "center",
-  },
-  carouselItem: {
-    position: "relative",
-    width: width - 80,
-    marginHorizontal: 20,
-  },
-  carouselImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
-    borderRadius: 8,
-  },
-  carouselButton: {
-    padding: 10,
-    backgroundColor: "#ddd",
-    borderRadius: 50,
-  },
-  price: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  location: {
-    fontSize: 18,
     marginVertical: 10,
   },
-  description: {
+  price: {
+    fontSize: 18,
+    color: "green",
+    marginBottom: 8,
+  },
+  location: {
     fontSize: 16,
-    color: "#666",
+    color: "#555",
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 14,
+    marginTop: 10,
+    color: "#333",
+    lineHeight: 20,
   },
 });
