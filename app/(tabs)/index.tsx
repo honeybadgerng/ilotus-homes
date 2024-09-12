@@ -107,6 +107,12 @@ export default function LandingPage() {
             </Text>
             <Text
               style={styles.menuItem}
+              onPress={() => navigation.navigate("PropertyRequest")}
+            >
+              Make a request
+            </Text>
+            <Text
+              style={styles.menuItem}
               onPress={() => navigation.navigate("ServicesScreen")}
             >
               Services
