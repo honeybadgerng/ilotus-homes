@@ -1,35 +1,54 @@
 // propertiesApi.js
 
 // Sample data for properties and locations
-const properties = [
+export const properties = [
   {
     id: "1",
-    title: "Property 1",
+    title: "Airlotus Court",
     location: "Lekki",
     images: [
-      require("../assets/property1.jpg"),
-      require("../assets/property2.jpg"),
+      require("../assets/app_pix/aviation3.jpg"),
+      require("../assets/app_pix/aviation4.jpg"),
+      require("../assets/app_pix/aviation5.jpg"),
+      require("../assets/app_pix/aviation6.jpg"),
+      require("../assets/app_pix/aviation7.jpg"),
+      require("../assets/app_pix/aviation8.jpg"),
+      require("../assets/app_pix/aviation9.jpg"),
+      require("../assets/app_pix/aviation10.jpg"),
       // Add more images as needed
     ],
-    price: "₦500,000",
-    description: "A beautiful 4-bedroom house in Lekki.",
+    price: "₦34,000,000",
+    description: "An ongoing aviation project at the heart of Lekki",
   },
   {
     id: "2",
-    title: "Property 2",
-    location: "Yaba",
+    title: "WhiteGold Court",
+    location: "Lekki",
     images: [
-      require("../assets/property2.jpg"),
-      require("../assets/property1.jpg"),
+      require("../assets/app_pix/whitegold.jpg"),
+      require("../assets/app_pix/whitegold2.jpg"),
       // Add more images as needed
     ],
-    price: "₦300,000",
-    description: "A cozy 3-bedroom apartment in Yaba.",
+    price: "₦100,000,000",
+    description: "A cozy 3-bedroom apartment in Lekki.",
   },
+  {
+    id: "3",
+    title: "Yuta",
+    location: "Leki",
+    images: [
+      require("../assets/app_pix/Yuta.jpg"),
+      require("../assets/app_pix/Yuta2.jpg"),
+      // Add more images as needed
+    ],
+    price: "₦300,000,000",
+    description: "A nice land in Lekki.",
+  },
+
   // Add more properties as needed
 ];
 
-const locations = [
+export const locations = [
   {
     id: "1",
     name: "Lekki",
