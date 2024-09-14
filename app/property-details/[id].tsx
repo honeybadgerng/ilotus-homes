@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Image,
@@ -47,7 +48,7 @@ export default function PropertyDetails() {
       });
     }
   };
-
+  const navigation = useNavigation();
   return (
     <ScrollView style={styles.container}>
       {/* Carousel for property images */}
@@ -57,7 +58,7 @@ export default function PropertyDetails() {
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          scrollEnabled={false} // Disable manual swiping; only allow buttons to navigate
+          scrollEnabled={false}
           style={styles.carousel}
         >
           {property.images.map((image, index) => (
@@ -86,6 +87,14 @@ export default function PropertyDetails() {
         <Text style={styles.price}>{property.price}</Text>
         <Text style={styles.location}>{property.location}</Text>
         <Text style={styles.description}>{property.description}</Text>
+      </View>
+
+      {/* Book Inspection Button */}
+      <View style={styles.bookInspectionButtonContainer}>
+        <Button
+          title="Book Inspection"
+          onPress={() => navigation.navigate("ScheduleInspection")}
+        />
       </View>
     </ScrollView>
   );
@@ -139,5 +148,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#333",
     lineHeight: 20,
+  },
+  bookInspectionButtonContainer: {
+    marginTop: 20,
+    paddingHorizontal: 16,
   },
 });
