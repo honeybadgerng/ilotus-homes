@@ -52,6 +52,10 @@ export default function RootLayout() {
           name="PropertyRequest"
           options={{ title: "Send in you requests" }} // Set the title for the about page
         />
+        <Stack.Screen
+          name="ScheduleInspection"
+          options={{ title: "Book Inspection" }} // Set the title for the about page
+        />
         <Stack.Screen name="OrderScreen" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
