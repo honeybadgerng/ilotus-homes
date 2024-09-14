@@ -63,6 +63,7 @@ export default function LandingPage() {
       <Image source={item.images[0]} style={styles.propertyImage} />
       <Text style={styles.title}>{item.title}</Text>
       <Text>{item.price}</Text>
+      <Text>Click to learn more</Text>
     </TouchableOpacity>
   );
 
